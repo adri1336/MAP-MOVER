@@ -1027,7 +1027,7 @@ SaveMap()
 						}
 					}
 					
-					if(MAPMOVER_OBJECT_INFO[i][TEXTURED])
+					if(MAPMOVER_OBJECT_INFO[i][TEXTTEXTURED])
 					{
 						for(new d = 0; d != MAPMOVER_OBJECT_INFO[i][TEXTTEXTURE_COUNT]; d ++)
 						{
