@@ -1031,7 +1031,7 @@ SaveMap()
 					{
 						for(new d = 0; d != MAPMOVER_OBJECT_INFO[i][TEXTTEXTURE_COUNT]; d ++)
 						{
-							format(line, 128, "SetObjectMaterialText(tmpobjid, %s, %d, %d, \"%s\", %d, %d, %d, %d, %d);\r\n", 
+							format(line, 128, "SetObjectMaterialText(tmpobjid, \"%s\", %d, %d, \"%s\", %d, %d, %d, %d, %d);\r\n", 
 							MAPMOVER_OBJECT_MTEXT_INFO[i][map_text][d], MAPMOVER_OBJECT_MTEXT_INFO[i][map_mindex][d], MAPMOVER_OBJECT_MTEXT_INFO[i][map_materialsize][d], MAPMOVER_OBJECT_MTEXT_INFO[i][map_fontface][d], MAPMOVER_OBJECT_MTEXT_INFO[i][map_fontsize][d], MAPMOVER_OBJECT_MTEXT_INFO[i][map_bold][d], MAPMOVER_OBJECT_MTEXT_INFO[i][map_fontcolor][d], MAPMOVER_OBJECT_MTEXT_INFO[i][map_backcolor][d], MAPMOVER_OBJECT_MTEXT_INFO[i][map_textalignment][d]);
 							fwrite(codefile, line);
 						}
