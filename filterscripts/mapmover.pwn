@@ -111,7 +111,7 @@ enum OBJECTMATERIAL_INFO
 	map_materialcolor
 	
 };
-new MAPMOVER_OBJECT_MATERIAL_INFO[MAX_MAPMOVER_OBJECTS][OBJECTMATERIAL_INFO][16];
+new MAPMOVER_OBJECT_MATERIAL_INFO[MAX_MAPMOVER_OBJECTS][16][OBJECTMATERIAL_INFO];
 
 
 enum OBJECTMATERIALTEXT_INFO
@@ -128,7 +128,7 @@ enum OBJECTMATERIALTEXT_INFO
 	map_textalignment
 	
 };
-new MAPMOVER_OBJECT_MTEXT_INFO[MAX_MAPMOVER_OBJECTS][OBJECTMATERIALTEXT_INFO][16];
+new MAPMOVER_OBJECT_MTEXT_INFO[MAX_MAPMOVER_OBJECTS][16][OBJECTMATERIALTEXT_INFO];
 //
 
 
@@ -269,12 +269,12 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 								
 								for(new d; d < sizeof(MAPMOVER_OBJECT_MATERIAL_INFO[]); d++)
 								{
-									for(new s; s < sizeof(MAPMOVER_OBJECT_MATERIAL_INFO[][]); s++) MAPMOVER_OBJECT_MATERIAL_INFO[i][OBJECTMATERIAL_INFO: d][s] = 0;
+									for(new s; s < sizeof(MAPMOVER_OBJECT_MATERIAL_INFO[][]); s++) MAPMOVER_OBJECT_MATERIAL_INFO[i][s][OBJECTMATERIAL_INFO: d] = 0;
 								}	
 								
 								for(new d; d < sizeof(MAPMOVER_OBJECT_MTEXT_INFO[]); d++)
 								{
-									for(new s; s < sizeof(MAPMOVER_OBJECT_MTEXT_INFO[][]); s++) MAPMOVER_OBJECT_MTEXT_INFO[i][OBJECTMATERIALTEXT_INFO: d][s] = 0;
+									for(new s; s < sizeof(MAPMOVER_OBJECT_MTEXT_INFO[][]); s++) MAPMOVER_OBJECT_MTEXT_INFO[i][s][OBJECTMATERIALTEXT_INFO: d] = 0;
 								}	
 								
 							}
@@ -684,11 +684,11 @@ public OnObjectTextured(objectid, materialindex, modelid, txdname[], texturename
 	new count = MAPMOVER_OBJECT_INFO[Index][TEXTURE_COUNT];
 	if(count == 16) return false;
 	
-	MAPMOVER_OBJECT_MATERIAL_INFO[Index][map_materialindex][count] = materialindex;
-	MAPMOVER_OBJECT_MATERIAL_INFO[Index][map_modelid][count] = modelid;
-	format(MAPMOVER_OBJECT_MATERIAL_INFO[Index][map_txdname][count], 16, "%s", txdname);
-	format(MAPMOVER_OBJECT_MATERIAL_INFO[Index][map_texturename][count], 16, "%s", texturename);
-	MAPMOVER_OBJECT_MATERIAL_INFO[Index][map_materialcolor][count] = materialcolor;
+	MAPMOVER_OBJECT_MATERIAL_INFO[Index][count][map_materialindex] = materialindex;
+	MAPMOVER_OBJECT_MATERIAL_INFO[Index][count][map_modelid] = modelid;
+	format(MAPMOVER_OBJECT_MATERIAL_INFO[Index][count][map_txdname], 24, txdname);
+	format(MAPMOVER_OBJECT_MATERIAL_INFO[Index][count][map_texturename], 24, texturename);
+	MAPMOVER_OBJECT_MATERIAL_INFO[Index][count][map_materialcolor] = materialcolor;
 	
 	MAPMOVER_OBJECT_INFO[Index][TEXTURE_COUNT] += 1;
 	return 1;
@@ -706,15 +706,15 @@ public OnObjectTextTextured(objectid, text[], materialindex, materialsize, fontf
 	new count = MAPMOVER_OBJECT_INFO[Index][TEXTTEXTURE_COUNT];
 	if(count == 16) return false;
 	
-	format(MAPMOVER_OBJECT_MTEXT_INFO[Index][map_text][count], 256, "%s", text);
-	MAPMOVER_OBJECT_MTEXT_INFO[Index][map_mindex][count] = materialindex;
-	MAPMOVER_OBJECT_MTEXT_INFO[Index][map_materialsize][count] = materialsize;
-	format(MAPMOVER_OBJECT_MTEXT_INFO[Index][map_fontface][count], 24, "%s", fontface);
-	MAPMOVER_OBJECT_MTEXT_INFO[Index][map_fontsize][count] = fontsize;
-	MAPMOVER_OBJECT_MTEXT_INFO[Index][map_bold][count] = bold;
-	MAPMOVER_OBJECT_MTEXT_INFO[Index][map_fontcolor][count] = fontcolor;
-	MAPMOVER_OBJECT_MTEXT_INFO[Index][map_backcolor][count] = backcolor;
-	MAPMOVER_OBJECT_MTEXT_INFO[Index][map_textalignment][count] = textalignment;
+	format(MAPMOVER_OBJECT_MTEXT_INFO[Index][count][map_text], 256, text);
+	MAPMOVER_OBJECT_MTEXT_INFO[Index][count][map_mindex] = materialindex;
+	MAPMOVER_OBJECT_MTEXT_INFO[Index][count][map_materialsize] = materialsize;
+	format(MAPMOVER_OBJECT_MTEXT_INFO[Index][count][map_fontface], 24, fontface);
+	MAPMOVER_OBJECT_MTEXT_INFO[Index][count][map_fontsize] = fontsize;
+	MAPMOVER_OBJECT_MTEXT_INFO[Index][count][map_bold] = bold;
+	MAPMOVER_OBJECT_MTEXT_INFO[Index][count][map_fontcolor] = fontcolor;
+	MAPMOVER_OBJECT_MTEXT_INFO[Index][count][map_backcolor] = backcolor;
+	MAPMOVER_OBJECT_MTEXT_INFO[Index][count][map_textalignment] = textalignment;
 	
 	MAPMOVER_OBJECT_INFO[Index][TEXTTEXTURE_COUNT] += 1;
 	return 1;
@@ -900,7 +900,7 @@ stock TextureImportedObject(index, objectid)
 {
 	for(new i = 0; i != MAPMOVER_OBJECT_INFO[index][TEXTURE_COUNT]; i ++)
 	{
-		SetObjectMaterial(objectid, MAPMOVER_OBJECT_MATERIAL_INFO[index][map_materialindex][i], MAPMOVER_OBJECT_MATERIAL_INFO[index][map_modelid][i], MAPMOVER_OBJECT_MATERIAL_INFO[index][map_txdname][i], MAPMOVER_OBJECT_MATERIAL_INFO[index][map_texturename][i], MAPMOVER_OBJECT_MATERIAL_INFO[index][map_materialcolor][i]);
+		SetObjectMaterial(objectid, MAPMOVER_OBJECT_MATERIAL_INFO[index][i][map_materialindex], MAPMOVER_OBJECT_MATERIAL_INFO[index][i][map_modelid], MAPMOVER_OBJECT_MATERIAL_INFO[index][i][map_txdname], MAPMOVER_OBJECT_MATERIAL_INFO[index][i][map_texturename], MAPMOVER_OBJECT_MATERIAL_INFO[index][i][map_materialcolor]);
 	}
 	return 1;
 }
@@ -909,7 +909,7 @@ stock TextTextureImportedObject(index, objectid)
 {
 	for(new i = 0; i != MAPMOVER_OBJECT_INFO[index][TEXTTEXTURE_COUNT]; i ++)
 	{
-		SetObjectMaterialText(objectid, MAPMOVER_OBJECT_MTEXT_INFO[index][map_text][i], MAPMOVER_OBJECT_MTEXT_INFO[index][map_mindex][i], MAPMOVER_OBJECT_MTEXT_INFO[index][map_materialsize][i], MAPMOVER_OBJECT_MTEXT_INFO[index][map_fontface][i], MAPMOVER_OBJECT_MTEXT_INFO[index][map_fontsize][i], MAPMOVER_OBJECT_MTEXT_INFO[index][map_bold][i], MAPMOVER_OBJECT_MTEXT_INFO[index][map_fontcolor][i], MAPMOVER_OBJECT_MTEXT_INFO[index][map_backcolor][i], MAPMOVER_OBJECT_MTEXT_INFO[index][map_textalignment][i]);
+		SetObjectMaterialText(objectid, MAPMOVER_OBJECT_MTEXT_INFO[index][i][map_text], MAPMOVER_OBJECT_MTEXT_INFO[index][i][map_mindex], MAPMOVER_OBJECT_MTEXT_INFO[index][i][map_materialsize], MAPMOVER_OBJECT_MTEXT_INFO[index][i][map_fontface], MAPMOVER_OBJECT_MTEXT_INFO[index][i][map_fontsize], MAPMOVER_OBJECT_MTEXT_INFO[index][i][map_bold], MAPMOVER_OBJECT_MTEXT_INFO[index][i][map_fontcolor], MAPMOVER_OBJECT_MTEXT_INFO[index][i][map_backcolor], MAPMOVER_OBJECT_MTEXT_INFO[index][i][map_textalignment]);
 	}
 	return 1;
 }
@@ -1022,17 +1022,17 @@ SaveMap()
 					{
 						for(new d = 0; d != MAPMOVER_OBJECT_INFO[i][TEXTURE_COUNT]; d ++)
 						{
-							format(line, 128, "SetObjectMaterial(tmpobjid, %d, %d, %s, %s, %d);\r\n", MAPMOVER_OBJECT_MATERIAL_INFO[i][map_materialindex][d], MAPMOVER_OBJECT_MATERIAL_INFO[i][map_modelid][d], MAPMOVER_OBJECT_MATERIAL_INFO[i][map_txdname][d], MAPMOVER_OBJECT_MATERIAL_INFO[i][map_texturename][d], MAPMOVER_OBJECT_MATERIAL_INFO[i][map_materialcolor][d]);
+							format(line, 128, "SetObjectMaterial(tmpobjid, %d, %d, \"%s\", \"%s\", %d);\r\n", MAPMOVER_OBJECT_MATERIAL_INFO[i][d][map_materialindex], MAPMOVER_OBJECT_MATERIAL_INFO[i][d][map_modelid], MAPMOVER_OBJECT_MATERIAL_INFO[i][d][map_txdname], MAPMOVER_OBJECT_MATERIAL_INFO[i][d][map_texturename], MAPMOVER_OBJECT_MATERIAL_INFO[i][d][map_materialcolor]);
 							fwrite(codefile, line);
 						}
 					}
 					
-					if(MAPMOVER_OBJECT_INFO[i][TEXTURED])
+					if(MAPMOVER_OBJECT_INFO[i][TEXTTEXTURED])
 					{
 						for(new d = 0; d != MAPMOVER_OBJECT_INFO[i][TEXTTEXTURE_COUNT]; d ++)
 						{
-							format(line, 128, "SetObjectMaterialText(tmpobjid, %s, %d, %d, %s, %d, %d, %d, %d, %d);\r\n", 
-							MAPMOVER_OBJECT_MTEXT_INFO[i][map_text][d], MAPMOVER_OBJECT_MTEXT_INFO[i][map_mindex][d], MAPMOVER_OBJECT_MTEXT_INFO[i][map_materialsize][d], MAPMOVER_OBJECT_MTEXT_INFO[i][map_fontface][d], MAPMOVER_OBJECT_MTEXT_INFO[i][map_fontsize][d], MAPMOVER_OBJECT_MTEXT_INFO[i][map_bold][d], MAPMOVER_OBJECT_MTEXT_INFO[i][map_fontcolor][d], MAPMOVER_OBJECT_MTEXT_INFO[i][map_backcolor][d], MAPMOVER_OBJECT_MTEXT_INFO[i][map_textalignment][d]);
+							format(line, 128, "SetObjectMaterialText(tmpobjid, \"%s\", %d, %d, \"%s\", %d, %d, %d, %d, %d);\r\n",
+							MAPMOVER_OBJECT_MTEXT_INFO[i][d][map_text], MAPMOVER_OBJECT_MTEXT_INFO[i][d][map_mindex], MAPMOVER_OBJECT_MTEXT_INFO[i][d][map_materialsize], MAPMOVER_OBJECT_MTEXT_INFO[i][d][map_fontface], MAPMOVER_OBJECT_MTEXT_INFO[i][d][map_fontsize], MAPMOVER_OBJECT_MTEXT_INFO[i][d][map_bold], MAPMOVER_OBJECT_MTEXT_INFO[i][d][map_fontcolor], MAPMOVER_OBJECT_MTEXT_INFO[i][d][map_backcolor], MAPMOVER_OBJECT_MTEXT_INFO[i][d][map_textalignment]);
 							fwrite(codefile, line);
 						}
 					}
@@ -1067,12 +1067,12 @@ Exit()
 		
 		for(new d; d < sizeof(MAPMOVER_OBJECT_MATERIAL_INFO[]); d++)
 		{
-			for(new s; s < sizeof(MAPMOVER_OBJECT_MATERIAL_INFO[][]); s++) MAPMOVER_OBJECT_MATERIAL_INFO[i][OBJECTMATERIAL_INFO: d][s] = 0;
+			for(new s; s < sizeof(MAPMOVER_OBJECT_MATERIAL_INFO[][]); s++) MAPMOVER_OBJECT_MATERIAL_INFO[i][s][OBJECTMATERIAL_INFO: d] = 0;
 		}
 		
 		for(new d; d < sizeof(MAPMOVER_OBJECT_MTEXT_INFO[]); d++)
 		{
-			for(new s; s < sizeof(MAPMOVER_OBJECT_MTEXT_INFO[][]); s++) MAPMOVER_OBJECT_MTEXT_INFO[i][OBJECTMATERIALTEXT_INFO: d][s] = 0;
+			for(new s; s < sizeof(MAPMOVER_OBJECT_MTEXT_INFO[][]); s++) MAPMOVER_OBJECT_MTEXT_INFO[i][s][OBJECTMATERIALTEXT_INFO: d] = 0;
 		}
 		
 	}
