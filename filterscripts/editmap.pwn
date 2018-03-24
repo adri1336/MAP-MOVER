@@ -12,7 +12,7 @@
 #define SetObjectMaterial				MAPMOVER_SetObjectMaterial
 #define SetDynamicObjectMaterial		MAPMOVER_SetObjectMaterial
 #define SetObjectMaterialText			MAPMOVER_SetObjectMaterialText
-#define SetDynamicObjectMaterialText	MAPMOVER_SetObjectMaterialText
+#define SetDynamicObjectMaterialText	MAPMOVER_SetDObjectMaterialText
 
 new playerid = 0; //Enter here playerid that you will use to edit the map. By default is 0.
 
