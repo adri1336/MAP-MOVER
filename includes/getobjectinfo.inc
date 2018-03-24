@@ -34,3 +34,10 @@ stock MAPMOVER_SetObjectMaterialText(objectid, text[], materialindex = 0, materi
 	CallRemoteFunction("OnObjectTextTextured", "dsddsddddd", objectid, text, materialindex, materialsize, fontface, fontsize, bold, fontcolor, backcolor, textalignment);
     return 1;
 }
+
+stock MAPMOVER_SetDObjectMaterialText(objectid, materialindex = 0, text[], materialsize = OBJECT_MATERIAL_SIZE_256x128, fontface[] = "Arial", fontsize = 24, bold = 1, fontcolor = 0xFFFFFFFF, backcolor = 0, textalignment = 0)
+{
+    SetObjectMaterialText(objectid, text, materialindex, materialsize, fontface, fontsize, bold, fontcolor, backcolor, textalignment);
+	CallRemoteFunction("OnObjectTextTextured", "dsddsddddd", objectid, text, materialindex, materialsize, fontface, fontsize, bold, fontcolor, backcolor, textalignment);
+    return 1;
+}
