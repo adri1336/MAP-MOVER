@@ -337,7 +337,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 								SendClientMessage(playerid, -1, "{CCCCCC}Please, set center object first.");
 								return 1;
 							}	
-							SendClientMessage(playerid, -1, "{CCCCCC}Use /movemode [1-5] to change move mode.  1. Normal  2. Camera  3. Cursor around.");
+							SendClientMessage(playerid, -1, "{CCCCCC}Use /movemode [1-3] to change move mode.  1. Normal  2. Camera  3. Cursor around.");
 							switch(mapmoverMoveMode)
 							{
 								case MOVEMODE_EDITOBJECT:
